@@ -6,6 +6,8 @@ public class Subobject {
     String risk_type; // FIRE or THEFT
     Object assigned_object = null;
 
+    public Subobject() { this("",0F,""); }
+
     public Subobject(String name, float price, String risk) {
         this.subobject_name = name;
         this.insured_price = price;
@@ -18,8 +20,16 @@ public class Subobject {
         System.out.println("--------Risk type: " + subobject.risk_type + "\n");
     }
 
+    public boolean SubobjectIsComplete(Subobject subobject) {
+        if (subobject.subobject_name.isEmpty()) return false;
+            else if (subobject.risk_type.isEmpty()) return false;
+                else if (subobject.insured_price <= 0F) return false;
+                    else if (subobject.assigned_object != null) return false;
+                        else return true;
+    }
+
     public static void addSubobjectToObject(Object obj, Subobject subobj) {
-        if (subobj.assigned_object == null) {
+        if (subobj.SubobjectIsComplete(subobj)) {
             subobj.assigned_object = obj;
             System.out.println("\nCurrent subobjects in object: " + obj.object_subobjects.stream().count());
             obj.object_subobjects.add(subobj);
@@ -27,7 +37,8 @@ public class Subobject {
             Object.displayObjects(obj);
         }
         else {
-            System.out.println("Subobject already assigned to an object!");
+            if (subobj.assigned_object != null) System.out.println("Subobject already assigned to an object!");
+            else throw new RuntimeException("Subobject not fully defined!");
         }
     }
 

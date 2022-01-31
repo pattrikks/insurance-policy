@@ -33,7 +33,7 @@ public class PremiumCalculator {
      *  and added to an object.
      */
     public static void calculate(Policy policy) {
-        if (policy.policy_objects != null) {
+        if (!policy.policy_objects.isEmpty()) {
             List<Object> objects;
             objects = policy.policy_objects;
             /**
@@ -82,23 +82,32 @@ public class PremiumCalculator {
                 String str_premium = String.format(" calculated premium is %.2f EUR", premium);
                 System.out.println("Policies " + policy.policy_number + str_premium);
                 policy.policy_status = "APPROVED";
+            } else {
+                throw new RuntimeException("Objects need to have " +
+                        "at least one subobject to calculate premium!");
             }
+        } else {
+            throw new RuntimeException("Policy needs to have an object!");
         }
     }
 
-    // testing
+    /**
+     * main method for running the calculator
+     * @param args
+     */
     public static void main(String[] args) {
         Policy p1 = new Policy();
         Object o1 = new Object("Condo");
         Object.addObjectToPolicy(p1, o1);
 
         Subobject s1 = new Subobject("Monitor",100.00F,"FIRE");
-        //Subobject.addSubobjectToObject(o1, s1);
+        Subobject.addSubobjectToObject(o1, s1);
         Subobject s2 = new Subobject("Phone charger", 8.00F, "THEFT");
-        //Subobject.addSubobjectToObject(o1, s2);
+        Subobject.addSubobjectToObject(o1, s2);
 
+        Policy p2 = new Policy();
         Object o2 = new Object("Private garage");
-        Object.addObjectToPolicy(p1, o2);
+        Object.addObjectToPolicy(p2, o2);
 
         Subobject s3 = new Subobject("Fridge",500.00F, "FIRE");
         Subobject.addSubobjectToObject(o2, s3);
@@ -107,5 +116,6 @@ public class PremiumCalculator {
 
         Policy.displayPolicy(p1);
         calculate(p1);
+        calculate(p2);
     }
 }
