@@ -4,7 +4,7 @@ import java.util.List;
 public class Object {
     String object_name;
     List<Subobject> object_subobjects;
-    Policy policy = null;
+    Policy assigned_policy = null; // the policy that the object is assigned to
 
     public Object () {
         throw new RuntimeException("Object needs a name!");
@@ -16,16 +16,17 @@ public class Object {
     }
 
     public static void addObjectToPolicy(Policy p, Object o) {
-        if (o.policy == null) {
-            o.policy = p;
+        /**
+         * checks if object is not already related to a policy
+         */
+        if (o.assigned_policy == null) {
+            o.assigned_policy = p;
             p.policy_objects.add(o);
             System.out.println("Object " + o.object_name + " added to policy " + p.policy_number);
             System.out.println("\nPolicy information:");
             Policy.displayPolicy(p);
             }
-        else {
-            System.out.println("Object is already assigned to a policy!");
-        }
+        else System.out.println("Object is already assigned to a policy!");
     }
 
     public static void displayObjects(Object object) {

@@ -20,7 +20,7 @@ public class Policy {
      */
     public Policy() {
         this.policy_status = "PENDING";
-        generatePolicyNumber();
+        this.policy_number = generatePolicyNumber();
         this.policy_objects = new ArrayList<Object>();
         if (policy_number != null && policy_status != null) {
             System.out.println("Policy " + this.policy_number + " created!\n");
@@ -30,10 +30,10 @@ public class Policy {
             System.out.println("Could not create a new policy!\n");
     }
 
-    private void generatePolicyNumber() {
+    private String generatePolicyNumber() {
         String generated_number = String.format("PG-2022-%06d",policyCounter+1);
         policyCounter++;
-        this.policy_number = generated_number;
+        return generated_number;
     }
 
     public static void displayPolicy(Policy p) {

@@ -92,7 +92,9 @@ public class PremiumCalculator {
     }
 
     /**
-     * main method for running the calculator
+     * main method
+     * used for creating the policies, objects and subobjects,
+     * and running the policy premium calculator
      * @param args
      */
     public static void main(String[] args) {
